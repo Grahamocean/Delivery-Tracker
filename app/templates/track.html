@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Track Your Package</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              fedexPurple: "#4D148C",
+              fedexOrange: "#FF6600",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <!-- NAVBAR -->
+    <nav class="bg-fedexOrange text-white">
+      <div
+        class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <span class="text-xl font-bold">📦 TrackIt</span>
+        <div class="hidden md:flex gap-6">
+          <a href="#" class="hover:text-white">Shipping</a>
+          <a href="#" class="hover:text-white">Tools</a>
+          <a href="#" class="hover:text-white">About</a>
+          <a href="#faqs" class="hover:text-white">FAQs</a>
+        </div>
+        <button class="md:hidden" onclick="toggleMenu()">☰</button>
+      </div>
+      <div id="mobileMenu" class="hidden md:hidden px-4 pb-4">
+        <a href="#" class="block py-1">Shipping</a>
+        <a href="#" class="block py-1">Tools</a>
+        <a href="#" class="block py-1">About</a>
+        <a href="#faqs" class="block py-1">FAQs</a>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="bg-fedexPurple text-white text-center py-12 px-4">
+      <h1 class="text-3xl font-bold mb-2">Track Your Package</h1>
+      <p class="text-lg">
+        Stay updated on your parcel status from start to finish.
+      </p>
+    </section>
+
+    <!-- TRACKING SECTION -->
+    <main class="max-w-2xl mx-auto bg-white p-6 rounded shadow mt-6">
+      <form
+        id="trackForm"
+        class="flex flex-col sm:flex-row gap-2 mb-6 relative"
+      >
+        <input
+          type="text"
+          id="trackingNumber"
+          placeholder="Enter Tracking Number"
+          class="flex-1 border border-gray-300 p-2 rounded"
+        />
+        <button
+          type="submit"
+          id="trackButton"
+          class="bg-fedexPurple text-white px-4 py-2 rounded hover:bg-purple-700"
+        >
+          Track
+        </button>
+        <div id="spinner" class="absolute right-[-2rem] top-2 hidden">
+          <svg
+            class="animate-spin h-6 w-6 text-fedexPurple"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              class="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              stroke-width="4"
+            ></circle>
+            <path
+              class="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v8H4z"
+            ></path>
+          </svg>
+        </div>
+      </form>
+
+      <!-- TRACKING RESULT -->
+      <div id="result" class="hidden">
+        <h3 class="text-xl font-semibold mb-2">Tracking Info</h3>
+        <p><strong>Status:</strong> <span id="statusText"></span></p>
+        <p><strong>Last Location:</strong> <span id="locationText"></span></p>
+        <p><strong>ETA:</strong> <span id="etaText"></span></p>
+
+        <!-- MODERN PROGRESS TRACKER -->
+        <div class="mt-10">
+          <div class="flex items-center justify-between relative">
+            <div class="w-full flex justify-between z-10">
+              <div class="step text-center flex-1">
+                <div
+                  id="dot-0"
+                  class="w-8 h-8 mx-auto rounded-full bg-gray-300 flex items-center justify-center text-white font-bold"
+                >
+                  1
+                </div>
+                <p class="text-xs mt-2">Shipped</p>
+              </div>
+              <div class="step text-center flex-1">
+                <div
+                  id="dot-1"
+                  class="w-8 h-8 mx-auto rounded-full bg-gray-300 flex items-center justify-center text-white font-bold"
+                >
+                  2
+                </div>
+                <p class="text-xs mt-2">In Transit</p>
+              </div>
+              <div class="step text-center flex-1">
+                <div
+                  id="dot-2"
+                  class="w-8 h-8 mx-auto rounded-full bg-gray-300 flex items-center justify-center text-white font-bold"
+                >
+                  3
+                </div>
+                <p class="text-xs mt-2">Out for Delivery</p>
+              </div>
+              <div class="step text-center flex-1">
+                <div
+                  id="dot-3"
+                  class="w-8 h-8 mx-auto rounded-full bg-gray-300 flex items-center justify-center text-white font-bold"
+                >
+                  4
+                </div>
+                <p class="text-xs mt-2">Delivered</p>
+              </div>
+            </div>
+            <div class="absolute top-4 left-0 right-0 h-1 bg-gray-200 z-0 mx-4">
+              <div
+                id="progressBar"
+                class="h-1 bg-fedexPurple w-0 transition-all duration-700 ease-in-out"
+              ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- FEATURES -->
+    <section class="max-w-5xl mx-auto px-4 mt-16">
+      <h2 class="text-2xl font-bold text-center mb-6">Why Choose TrackIt?</h2>
+      <div class="grid md:grid-cols-3 gap-6 text-center">
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="font-semibold text-lg mb-2">⚡ Fast Results</h3>
+          <p class="text-sm text-gray-600">
+            Instant updates on package status and movement.
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="font-semibold text-lg mb-2">🧭 Easy Navigation</h3>
+          <p class="text-sm text-gray-600">
+            Designed for a seamless experience across devices.
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="font-semibold text-lg mb-2">📍 Real-time Info</h3>
+          <p class="text-sm text-gray-600">
+            Get accurate status and delivery estimates.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQs -->
+    <section id="faqs" class="max-w-4xl mx-auto px-4 mt-20 mb-16">
+      <h2 class="text-2xl font-bold text-center mb-6">FAQs</h2>
+      <div class="space-y-4">
+        <details class="bg-white p-4 rounded shadow">
+          <summary
+            class="cursor-pointer font-semibold flex justify-between items-center"
+          >
+            <span>📦 Where do I find my tracking number?</span>
+            <span>➕</span>
+          </summary>
+          <p class="mt-2 text-sm text-gray-700">
+            You’ll receive it via email or SMS from the courier after shipping.
+          </p>
+        </details>
+        <details class="bg-white p-4 rounded shadow">
+          <summary
+            class="cursor-pointer font-semibold flex justify-between items-center"
+          >
+            <span>🚫 My tracking number isn’t working?</span>
+            <span>➕</span>
+          </summary>
+          <p class="mt-2 text-sm text-gray-700">
+            Double-check for typos or try again later as the system updates.
+          </p>
+        </details>
+        <details class="bg-white p-4 rounded shadow">
+          <summary
+            class="cursor-pointer font-semibold flex justify-between items-center"
+          >
+            <span>🔄 How often is tracking updated?</span>
+            <span>➕</span>
+          </summary>
+          <p class="mt-2 text-sm text-gray-700">
+            Status updates occur in real-time with each scan by the courier.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-800 text-white py-10">
+      <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-4 gap-8">
+        <div>
+          <h4 class="font-bold mb-3">TrackIt</h4>
+          <p class="text-sm text-gray-300">
+            Your reliable parcel tracking partner. Know where your package is
+            anytime, anywhere.
+          </p>
+        </div>
+        <div>
+          <h4 class="font-bold mb-3">Company</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#" class="hover:text-white">About Us</a></li>
+            <li><a href="#" class="hover:text-white">Careers</a></li>
+            <li><a href="#" class="hover:text-white">Blog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-3">Help</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#" class="hover:text-white">FAQs</a></li>
+            <li><a href="#" class="hover:text-white">Support</a></li>
+            <li><a href="#" class="hover:text-white">Shipping Info</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-bold mb-3">Contact</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li>Mon - Fri: 9am - 6pm</li>
+          </ul>
+        </div>
+      </div>
+      <div class="text-center text-sm text-gray-500 mt-10">
+        &copy; 2025 TrackIt. All rights reserved.
+      </div>
+    </footer>
+
+    <!-- SCRIPT -->
+    <script>
+      function toggleMenu() {
+        document.getElementById("mobileMenu").classList.toggle("hidden");
+      }
+
+      const steps = ["Shipped", "In Transit", "Out for Delivery", "Delivered"];
+      const form = document.getElementById("trackForm");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const trackingNumber = document
+          .getElementById("trackingNumber")
+          .value.trim();
+        if (!trackingNumber) return alert("Enter a tracking number");
+
+        const spinner = document.getElementById("spinner");
+        const button = document.getElementById("trackButton");
+
+        spinner.classList.remove("hidden");
+        button.disabled = true;
+
+        try {
+          const res = await fetch(`/track?tracking_number=${trackingNumber}`);
+          const data = await res.json();
+
+          if (data.error) return alert(data.error);
+
+          document.getElementById("result").classList.remove("hidden");
+          document.getElementById("statusText").textContent = data.status;
+          document.getElementById("locationText").textContent =
+            data.last_location;
+          document.getElementById("etaText").textContent = data.eta;
+
+          const index = steps.indexOf(data.status);
+          const progressWidths = [0, 33, 66, 100];
+
+          for (let i = 0; i < 4; i++) {
+            document.getElementById(`dot-${i}`).className =
+              "w-8 h-8 mx-auto rounded-full flex items-center justify-center text-white font-bold " +
+              (i <= index ? "bg-fedexPurple" : "bg-gray-300");
+          }
+
+          const bar = document.getElementById("progressBar");
+          bar.style.width = progressWidths[index] + "%";
+        } catch (err) {
+          alert("Error tracking package");
+        } finally {
+          spinner.classList.add("hidden");
+          button.disabled = false;
+        }
+      });
+    </script>
+  </body>
+</html>
