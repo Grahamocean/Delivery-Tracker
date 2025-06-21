@@ -56,27 +56,31 @@
 #         }
 #     }
 
-
 from flask_admin.contrib.sqla import ModelView
 from wtforms.validators import DataRequired
+from wtforms import StringField
 from .models import PackageTracking
 
 class CustomModelView(ModelView):
+    form_overrides = {
+        'tracking_number': StringField,
+        'status': StringField,
+        'last_location': StringField,
+        'eta': StringField,
+    }
+
+    form_widget_args = {
+        'tracking_number': {'placeholder': 'Enter Tracking Number'},
+        'status': {'placeholder': 'e.g. In Transit, Delivered'},
+        'last_location': {'placeholder': 'e.g. Lagos, NG'},
+        'eta': {'placeholder': 'e.g. 2025-06-21'},
+    }
+
     form_args = {
-        'tracking_number': {
-            'label': 'Tracking Number',
-            'validators': [DataRequired()]
-        },
-        'status': {
-            'label': 'Delivery Status',
-            'validators': [DataRequired()]
-        },
-        'last_location': {
-            'label': 'Last Known Location'
-        },
-        'eta': {
-            'label': 'Estimated Time of Arrival'
-        }
+        'tracking_number': dict(label='Tracking Number', validators=[DataRequired()]),
+        'status': dict(label='Delivery Status', validators=[DataRequired()]),
+        'last_location': dict(label='Last Known Location'),
+        'eta': dict(label='Estimated Time of Arrival'),
     }
 
     column_searchable_list = ['tracking_number', 'status', 'last_location']
