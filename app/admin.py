@@ -62,23 +62,23 @@ from .models import PackageTracking
 
 class CustomModelView(ModelView):
     form_args = {
-        'tracking_number': dict(
-            label='Tracking Number',
-            validators=[DataRequired()]
-        ),
-        'status': dict(
-            label='Delivery Status',
-            validators=[DataRequired()]
-        ),
-        'last_location': dict(
-            label='Last Known Location'
-        ),
-        'eta': dict(
-            label='Estimated Time of Arrival'
-        )
+        'tracking_number': {
+            'label': 'Tracking Number',
+            'validators': [DataRequired()]  # ✅ Use a list, not tuple
+        },
+        'status': {
+            'label': 'Delivery Status',
+            'validators': [DataRequired()]  # ✅ Also a list here
+        },
+        'last_location': {
+            'label': 'Last Known Location'
+        },
+        'eta': {
+            'label': 'Estimated Time of Arrival'
+        }
     }
 
-    column_searchable_list = ['tracking_number', 'status', 'last_location']
-    column_filters = ['status']
     column_list = ['tracking_number', 'status', 'last_location', 'eta']
+    column_filters = ['status']
+    column_searchable_list = ['tracking_number', 'status', 'last_location']
     can_export = True
