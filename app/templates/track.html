@@ -2,6 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename='favicon.ico') }}"
+    />
+
     <title>Track Your Package</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
@@ -20,11 +26,22 @@
   </head>
   <body class="bg-gray-100 text-gray-800">
     <!-- NAVBAR -->
+    <!-- NAVBAR -->
     <nav class="bg-fedexOrange text-white">
       <div
         class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center"
       >
-        <span class="text-xl font-bold">📦 TrackIt</span>
+        <a
+          href="{{ url_for('main.index') }}"
+          class="flex items-center space-x-2"
+        >
+          <img
+            src="{{ url_for('static', filename='images/logo.png') }}"
+            alt="TrackNavi Logo"
+            class="h-10 w-auto"
+          />
+          <span class="text-xl font-bold">TrackNavi</span>
+        </a>
         <div class="hidden md:flex gap-6">
           <a href="#" class="hover:text-white">Shipping</a>
           <a href="#" class="hover:text-white">Tools</a>
@@ -152,7 +169,7 @@
 
     <!-- FEATURES -->
     <section class="max-w-5xl mx-auto px-4 mt-16">
-      <h2 class="text-2xl font-bold text-center mb-6">Why Choose TrackIt?</h2>
+      <h2 class="text-2xl font-bold text-center mb-6">Why Choose TrackNavi?</h2>
       <div class="grid md:grid-cols-3 gap-6 text-center">
         <div class="bg-white p-6 rounded shadow">
           <h3 class="font-semibold text-lg mb-2">⚡ Fast Results</h3>
@@ -219,7 +236,7 @@
     <footer class="bg-gray-800 text-white py-10">
       <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-4 gap-8">
         <div>
-          <h4 class="font-bold mb-3">TrackIt</h4>
+          <h4 class="font-bold mb-3">TrackNavi</h4>
           <p class="text-sm text-gray-300">
             Your reliable parcel tracking partner. Know where your package is
             anytime, anywhere.
@@ -249,7 +266,7 @@
         </div>
       </div>
       <div class="text-center text-sm text-gray-500 mt-10">
-        &copy; 2025 TrackIt. All rights reserved.
+        &copy; 2025 TrackNavi. All rights reserved.
       </div>
     </footer>
 
