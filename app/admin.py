@@ -61,26 +61,24 @@ from wtforms.validators import DataRequired
 from .models import PackageTracking
 
 class CustomModelView(ModelView):
-    form_columns = ['tracking_number', 'status', 'last_location', 'eta']
-
     form_args = {
-        'tracking_number': {
-            'label': 'Tracking Number',
-            'validators': [DataRequired()]
-        },
-        'status': {
-            'label': 'Delivery Status',
-            'validators': [DataRequired()]
-        },
-        'last_location': {
-            'label': 'Last Known Location'
-        },
-        'eta': {
-            'label': 'Estimated Time of Arrival'
-        }
+        'tracking_number': dict(
+            label='Tracking Number',
+            validators=[DataRequired()]
+        ),
+        'status': dict(
+            label='Delivery Status',
+            validators=[DataRequired()]
+        ),
+        'last_location': dict(
+            label='Last Known Location'
+        ),
+        'eta': dict(
+            label='Estimated Time of Arrival'
+        )
     }
 
-    column_list = ['tracking_number', 'status', 'last_location', 'eta']
     column_searchable_list = ['tracking_number', 'status', 'last_location']
     column_filters = ['status']
+    column_list = ['tracking_number', 'status', 'last_location', 'eta']
     can_export = True
