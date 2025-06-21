@@ -9,6 +9,8 @@ def create_app():
     app.config['SECRET_KEY'] = 'supersecret'
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///tracker.db'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config.from_object('app.config.Config')
+
 
     db.init_app(app)
 
