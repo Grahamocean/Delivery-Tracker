@@ -46,4 +46,5 @@ def redirect_to_www_and_https():
 
 if __name__ == '__main__':
     # Run with HTTPS locally using self-signed cert
-    app.run(ssl_context=('cert.pem', 'key.pem'), debug=True)
+   app.run(debug=True)
+
