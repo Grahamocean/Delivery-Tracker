@@ -35,16 +35,39 @@
                 >Edit</a
               >
               <form
-                action="{{ url_for('admin.delete_package', id=package.id) }}"
+                action="{{ url_for('admin.add_package') }}"
                 method="POST"
-                style="display: inline"
+                class="mb-8 space-y-4"
               >
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <input
+                    name="tracking_number"
+                    placeholder="Tracking Number"
+                    required
+                    class="p-2 border rounded"
+                  />
+                  <input
+                    name="status"
+                    placeholder="Status"
+                    required
+                    class="p-2 border rounded"
+                  />
+                  <input
+                    name="last_location"
+                    placeholder="Last Location"
+                    class="p-2 border rounded"
+                  />
+                  <input
+                    name="eta"
+                    placeholder="ETA (YYYY-MM-DD)"
+                    class="p-2 border rounded"
+                  />
+                </div>
                 <button
                   type="submit"
-                  class="text-red-600 hover:underline"
-                  onclick="return confirm('Delete this package?');"
+                  class="bg-purple-700 text-white px-6 py-2 rounded hover:bg-purple-800"
                 >
-                  Delete
+                  Add Package
                 </button>
               </form>
             </td>

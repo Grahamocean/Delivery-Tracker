@@ -276,6 +276,7 @@
       }
 
       const steps = ["Shipped", "In Transit", "Out for Delivery", "Delivered"];
+      const progressWidths = [0, 33, 66, 100];
       const form = document.getElementById("trackForm");
 
       form.addEventListener("submit", async (e) => {
@@ -303,17 +304,20 @@
             data.last_location;
           document.getElementById("etaText").textContent = data.eta;
 
-          const index = steps.indexOf(data.status);
-          const progressWidths = [0, 33, 66, 100];
+          // Fallback-safe index matching
+          const index = steps.findIndex(
+            (step) => step.toLowerCase() === data.status.toLowerCase().trim()
+          );
+          const safeIndex = index === -1 ? 0 : index;
 
           for (let i = 0; i < 4; i++) {
             document.getElementById(`dot-${i}`).className =
               "w-8 h-8 mx-auto rounded-full flex items-center justify-center text-white font-bold " +
-              (i <= index ? "bg-fedexPurple" : "bg-gray-300");
+              (i <= safeIndex ? "bg-fedexPurple" : "bg-gray-300");
           }
 
           const bar = document.getElementById("progressBar");
-          bar.style.width = progressWidths[index] + "%";
+          bar.style.width = progressWidths[safeIndex] + "%";
         } catch (err) {
           alert("Error tracking package");
         } finally {
